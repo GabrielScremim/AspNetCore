@@ -1,0 +1,351 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ssi.API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Acompanhar/getall": {
+      "get": {
+        "tags": [
+          "Acompanhar"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Historico": {
+        "type": "object",
+        "properties": {
+          "historicoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dataAtualizacao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "descricaoAtualizacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssiSsiId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioChapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssiSsi": {
+            "$ref": "#/components/schemas/Ssi"
+          },
+          "usuarioChapaNavigation": {
+            "$ref": "#/components/schemas/Usuario"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Peca": {
+        "type": "object",
+        "properties": {
+          "pecaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dataPeca": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "descricao": {
+            "type": "string",
+            "nullable": true
+          },
+          "valor": {
+            "type": "number",
+            "format": "double"
+          },
+          "fkSsiId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fkUsuarioChapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "fkSsi": {
+            "$ref": "#/components/schemas/Ssi"
+          },
+          "fkUsuarioChapaNavigation": {
+            "$ref": "#/components/schemas/Usuario"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Servico": {
+        "type": "object",
+        "properties": {
+          "servicoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mostrar": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomeServico": {
+            "type": "string",
+            "nullable": true
+          },
+          "areaServico": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssis": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ssi"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ssi": {
+        "type": "object",
+        "properties": {
+          "ssiId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nomeSolicitante": {
+            "type": "string",
+            "nullable": true
+          },
+          "chapaSolicitante": {
+            "type": "string",
+            "nullable": true
+          },
+          "centroDeCusto": {
+            "type": "string",
+            "nullable": true
+          },
+          "ramal": {
+            "type": "string",
+            "nullable": true
+          },
+          "descProblema": {
+            "type": "string",
+            "nullable": true
+          },
+          "patEquipamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "andamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataFinalizacao": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fkUsuarioChapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "fkServicoId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "chapaSolicitanteNavigation": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "fkServico": {
+            "$ref": "#/components/schemas/Servico"
+          },
+          "fkUsuarioChapaNavigation": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "historicos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Historico"
+            },
+            "nullable": true
+          },
+          "pecas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Peca"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "chapa": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "ramal": {
+            "type": "string",
+            "nullable": true
+          },
+          "senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "mostrar": {
+            "type": "string",
+            "nullable": true
+          },
+          "areaTecnico": {
+            "type": "string",
+            "nullable": true
+          },
+          "historicos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Historico"
+            },
+            "nullable": true
+          },
+          "pecas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Peca"
+            },
+            "nullable": true
+          },
+          "ssiChapaSolicitanteNavigations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ssi"
+            },
+            "nullable": true
+          },
+          "ssiFkUsuarioChapaNavigations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ssi"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

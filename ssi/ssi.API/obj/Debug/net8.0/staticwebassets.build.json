@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "RFnFTzrUchT8ImaepliFwkh+yTT0TtKy9s7S6KpLXGg=",
+  "Source": "ssi.API",
+  "BasePath": "_content/ssi.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

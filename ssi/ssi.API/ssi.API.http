@@ -1,0 +1,6 @@
+@ssi.API_HostAddress = http://localhost:5101
+
+GET {{ssi.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
