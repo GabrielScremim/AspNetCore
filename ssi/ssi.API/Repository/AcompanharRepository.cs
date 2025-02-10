@@ -13,7 +13,7 @@ namespace ssi.API.Repository
             _context = context;
         }
 
-        public Task AtualizarSSI(DateTime dataHoraFormatada, string descricaoServico, int id, int chapaTecnico)
+        public Task AtualizarSSI(DateTime dataHoraFormatada, string descricaoServico, int id, string chapaTecnico)
         {
             throw new NotImplementedException();
         }
@@ -23,19 +23,19 @@ namespace ssi.API.Repository
             return await _context.Ssis.ToListAsync();
         }
 
-        public Task<IEnumerable<Ssi>> BuscarSSIDate(DateTime dataInicio, DateTime dataFim)
+        public async Task<IEnumerable<Ssi>> BuscarSSIDate(DateTime dataInicio, DateTime dataFim)
         {
-            throw new NotImplementedException();
+            return await _context.Ssis.Where(s=> s.DataRegistro >= dataInicio && s.DataFinalizacao <= dataFim).ToListAsync();
         }
 
-        public Task<IEnumerable<Ssi>> BuscarSSIUsuario(int chapaUsuario)
+        public async Task<IEnumerable<Ssi>> BuscarSSIUsuario(string chapaUsuario)
         {
-            throw new NotImplementedException();
+            return await _context.Ssis.Where(s => s.ChapaSolicitante == chapaUsuario).ToListAsync();
         }
 
-        public Task<IEnumerable<Ssi>> BuscarSSUsuarioDate(int chapaUsuario, DateTime dataInicio, DateTime dataFim)
+        public async Task<IEnumerable<Ssi>> BuscarSSUsuarioDate(string chapaUsuario, DateTime dataInicio, DateTime dataFim)
         {
-            throw new NotImplementedException();
+            return await _context.Ssis.Where(s => s.ChapaSolicitante == chapaUsuario && s.DataRegistro >= dataInicio && s.DataFinalizacao <= dataFim).ToListAsync();
         }
     }
 }

@@ -2,18 +2,33 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ssi.API.Models;
 
+[Table("servico")]
 public partial class Servico
 {
+    [Key]
+    [Column("servico_id", TypeName = "int(11)")]
     public int ServicoId { get; set; }
 
+    [Column("mostrar")]
+    [StringLength(1)]
     public string Mostrar { get; set; }
 
+    [Required]
+    [Column("nome_servico")]
+    [StringLength(100)]
     public string NomeServico { get; set; }
 
+    [Required]
+    [Column("area_servico")]
+    [StringLength(50)]
     public string AreaServico { get; set; }
 
+    [InverseProperty("FkServico")]
     public virtual ICollection<Ssi> Ssis { get; set; } = new List<Ssi>();
 }

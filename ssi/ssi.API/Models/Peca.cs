@@ -2,24 +2,45 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ssi.API.Models;
 
+[Table("peca")]
+[Index("FkSsiId", Name = "fk_peca_ssi1_idx")]
+[Index("FkUsuarioChapa", Name = "fk_peca_usuario1_idx")]
 public partial class Peca
 {
+    [Key]
+    [Column("peca_id", TypeName = "int(11)")]
     public int PecaId { get; set; }
 
+    [Column("data_peca", TypeName = "datetime")]
     public DateTime DataPeca { get; set; }
 
+    [Column("descricao")]
+    [StringLength(100)]
     public string Descricao { get; set; }
 
+    [Column("valor")]
+    [Precision(10, 2)]
     public decimal Valor { get; set; }
 
+    [Column("fk_ssi_id", TypeName = "int(11)")]
     public int FkSsiId { get; set; }
 
+    [Required]
+    [Column("fk_usuario_chapa")]
+    [StringLength(6)]
     public string FkUsuarioChapa { get; set; }
 
+    [ForeignKey("FkSsiId")]
+    [InverseProperty("Pecas")]
     public virtual Ssi FkSsi { get; set; }
 
+    [ForeignKey("FkUsuarioChapa")]
+    [InverseProperty("Pecas")]
     public virtual Usuario FkUsuarioChapaNavigation { get; set; }
 }

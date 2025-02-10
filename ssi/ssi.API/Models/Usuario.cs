@@ -2,30 +2,55 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ssi.API.Models;
 
+[Table("usuario")]
 public partial class Usuario
 {
+    [Key]
+    [Column("chapa")]
+    [StringLength(6)]
     public string Chapa { get; set; }
 
+    [Required]
+    [Column("nome")]
+    [StringLength(255)]
     public string Nome { get; set; }
 
+    [Required]
+    [StringLength(4)]
     public string Ramal { get; set; }
 
+    [Column("senha")]
+    [StringLength(255)]
     public string Senha { get; set; }
 
+    [Required]
+    [Column("tipo_usuario", TypeName = "enum('gerente','tecnico','usuario')")]
     public string TipoUsuario { get; set; }
 
+    [Required]
+    [Column("mostrar")]
+    [StringLength(1)]
     public string Mostrar { get; set; }
 
+    [Column("area_tecnico")]
+    [StringLength(50)]
     public string AreaTecnico { get; set; }
 
+    [InverseProperty("UsuarioChapaNavigation")]
     public virtual ICollection<Historico> Historicos { get; set; } = new List<Historico>();
 
+    [InverseProperty("FkUsuarioChapaNavigation")]
     public virtual ICollection<Peca> Pecas { get; set; } = new List<Peca>();
 
+    [InverseProperty("ChapaSolicitanteNavigation")]
     public virtual ICollection<Ssi> SsiChapaSolicitanteNavigations { get; set; } = new List<Ssi>();
 
+    [InverseProperty("FkUsuarioChapaNavigation")]
     public virtual ICollection<Ssi> SsiFkUsuarioChapaNavigations { get; set; } = new List<Ssi>();
 }

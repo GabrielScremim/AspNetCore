@@ -2,12 +2,21 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ssi.API.Models;
 
+[Table("centros_custo")]
 public partial class CentrosCusto
 {
+    [Key]
+    [Column("centro_custo_id", TypeName = "int(10) unsigned")]
     public uint CentroCustoId { get; set; }
 
+    [Required]
+    [Column("nome_centro_custo")]
+    [StringLength(255)]
     public string NomeCentroCusto { get; set; }
 }

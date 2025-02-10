@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ssiContext>(options =>
 
 // Adicionar repositório de Acompanhar
 builder.Services.AddScoped<IAcompanhar, AcompanharRepository>();
+builder.Services.AddScoped<IUsuario, UsuarioRepository>();
 
 // Adicionar controladores
 builder.Services.AddControllers();

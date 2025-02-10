@@ -2,42 +2,82 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ssi.API.Models;
 
+[Table("ssi")]
+[Index("ChapaSolicitante", Name = "fk_solicitante_chapa")]
+[Index("FkServicoId", Name = "fk_ssi_servico1_idx")]
+[Index("FkUsuarioChapa", Name = "fk_ssi_usuario_idx")]
 public partial class Ssi
 {
+    [Key]
+    [Column("ssi_id", TypeName = "int(11)")]
     public int SsiId { get; set; }
 
+    [Required]
+    [Column("nome_solicitante")]
+    [StringLength(100)]
     public string NomeSolicitante { get; set; }
 
+    [Required]
+    [Column("chapa_solicitante")]
+    [StringLength(6)]
     public string ChapaSolicitante { get; set; }
 
+    [Required]
+    [Column("centro_de_custo")]
+    [StringLength(100)]
     public string CentroDeCusto { get; set; }
 
+    [Required]
+    [Column("ramal")]
+    [StringLength(4)]
     public string Ramal { get; set; }
 
+    [Required]
+    [Column("desc_problema")]
     public string DescProblema { get; set; }
 
+    [Column("pat_equipamento")]
+    [StringLength(100)]
     public string PatEquipamento { get; set; }
 
+    [Column("data_registro", TypeName = "datetime")]
     public DateTime DataRegistro { get; set; }
 
+    [Column("andamento")]
+    [StringLength(1)]
     public string Andamento { get; set; }
 
+    [Column("data_finalizacao", TypeName = "datetime")]
     public DateTime? DataFinalizacao { get; set; }
 
+    [Column("fk_usuario_chapa")]
+    [StringLength(6)]
     public string FkUsuarioChapa { get; set; }
 
+    [Column("fk_servico_id", TypeName = "int(11)")]
     public int? FkServicoId { get; set; }
 
+    [ForeignKey("ChapaSolicitante")]
+    [InverseProperty("SsiChapaSolicitanteNavigations")]
     public virtual Usuario ChapaSolicitanteNavigation { get; set; }
 
+    [ForeignKey("FkServicoId")]
+    [InverseProperty("Ssis")]
     public virtual Servico FkServico { get; set; }
 
+    [ForeignKey("FkUsuarioChapa")]
+    [InverseProperty("SsiFkUsuarioChapaNavigations")]
     public virtual Usuario FkUsuarioChapaNavigation { get; set; }
 
+    [InverseProperty("SsiSsi")]
     public virtual ICollection<Historico> Historicos { get; set; } = new List<Historico>();
 
+    [InverseProperty("FkSsi")]
     public virtual ICollection<Peca> Pecas { get; set; } = new List<Peca>();
 }

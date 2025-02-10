@@ -2,22 +2,41 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ssi.API.Models;
 
+[Table("historico")]
+[Index("SsiSsiId", Name = "fk_historico_ssi1_idx")]
+[Index("UsuarioChapa", Name = "fk_historico_usuario1_idx")]
 public partial class Historico
 {
+    [Key]
+    [Column("historico_id", TypeName = "int(11) unsigned")]
     public uint HistoricoId { get; set; }
 
+    [Column("data_atualizacao", TypeName = "datetime")]
     public DateTime DataAtualizacao { get; set; }
 
+    [Required]
+    [Column("descricao_atualizacao")]
+    [StringLength(255)]
     public string DescricaoAtualizacao { get; set; }
 
+    [Column("ssi_ssi_id", TypeName = "int(11)")]
     public int SsiSsiId { get; set; }
 
+    [Column("usuario_chapa")]
+    [StringLength(6)]
     public string UsuarioChapa { get; set; }
 
+    [ForeignKey("SsiSsiId")]
+    [InverseProperty("Historicos")]
     public virtual Ssi SsiSsi { get; set; }
 
+    [ForeignKey("UsuarioChapa")]
+    [InverseProperty("Historicos")]
     public virtual Usuario UsuarioChapaNavigation { get; set; }
 }

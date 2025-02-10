@@ -34,94 +34,32 @@ public partial class ssiContext : DbContext
         modelBuilder.Entity<CentrosCusto>(entity =>
         {
             entity.HasKey(e => e.CentroCustoId).HasName("PRIMARY");
-
-            entity.ToTable("centros_custo");
-
-            entity.Property(e => e.CentroCustoId)
-                .HasColumnType("int(10) unsigned")
-                .HasColumnName("centro_custo_id");
-            entity.Property(e => e.NomeCentroCusto)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("nome_centro_custo");
         });
 
         modelBuilder.Entity<Historico>(entity =>
         {
             entity.HasKey(e => e.HistoricoId).HasName("PRIMARY");
 
-            entity.ToTable("historico");
-
-            entity.HasIndex(e => e.SsiSsiId, "fk_historico_ssi1_idx");
-
-            entity.HasIndex(e => e.UsuarioChapa, "fk_historico_usuario1_idx");
-
-            entity.Property(e => e.HistoricoId)
-                .HasColumnType("int(11) unsigned")
-                .HasColumnName("historico_id");
-            entity.Property(e => e.DataAtualizacao)
-                .HasColumnType("datetime")
-                .HasColumnName("data_atualizacao");
-            entity.Property(e => e.DescricaoAtualizacao)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("descricao_atualizacao");
-            entity.Property(e => e.SsiSsiId)
-                .HasColumnType("int(11)")
-                .HasColumnName("ssi_ssi_id");
-            entity.Property(e => e.UsuarioChapa)
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("usuario_chapa");
+            entity.Property(e => e.UsuarioChapa).IsFixedLength();
 
             entity.HasOne(d => d.SsiSsi).WithMany(p => p.Historicos)
-                .HasForeignKey(d => d.SsiSsiId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_historico_ssi1");
 
-            entity.HasOne(d => d.UsuarioChapaNavigation).WithMany(p => p.Historicos)
-                .HasForeignKey(d => d.UsuarioChapa)
-                .HasConstraintName("fk_historico_usuario1");
+            entity.HasOne(d => d.UsuarioChapaNavigation).WithMany(p => p.Historicos).HasConstraintName("fk_historico_usuario1");
         });
 
         modelBuilder.Entity<Peca>(entity =>
         {
             entity.HasKey(e => e.PecaId).HasName("PRIMARY");
 
-            entity.ToTable("peca");
-
-            entity.HasIndex(e => e.FkSsiId, "fk_peca_ssi1_idx");
-
-            entity.HasIndex(e => e.FkUsuarioChapa, "fk_peca_usuario1_idx");
-
-            entity.Property(e => e.PecaId)
-                .HasColumnType("int(11)")
-                .HasColumnName("peca_id");
-            entity.Property(e => e.DataPeca)
-                .HasColumnType("datetime")
-                .HasColumnName("data_peca");
-            entity.Property(e => e.Descricao)
-                .HasMaxLength(100)
-                .HasColumnName("descricao");
-            entity.Property(e => e.FkSsiId)
-                .HasColumnType("int(11)")
-                .HasColumnName("fk_ssi_id");
-            entity.Property(e => e.FkUsuarioChapa)
-                .IsRequired()
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("fk_usuario_chapa");
-            entity.Property(e => e.Valor)
-                .HasPrecision(10, 2)
-                .HasColumnName("valor");
+            entity.Property(e => e.FkUsuarioChapa).IsFixedLength();
 
             entity.HasOne(d => d.FkSsi).WithMany(p => p.Pecas)
-                .HasForeignKey(d => d.FkSsiId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_peca_ssi1");
 
             entity.HasOne(d => d.FkUsuarioChapaNavigation).WithMany(p => p.Pecas)
-                .HasForeignKey(d => d.FkUsuarioChapa)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_peca_usuario1");
         });
@@ -130,131 +68,37 @@ public partial class ssiContext : DbContext
         {
             entity.HasKey(e => e.ServicoId).HasName("PRIMARY");
 
-            entity.ToTable("servico");
-
-            entity.Property(e => e.ServicoId)
-                .HasColumnType("int(11)")
-                .HasColumnName("servico_id");
-            entity.Property(e => e.AreaServico)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("area_servico");
-            entity.Property(e => e.Mostrar)
-                .HasMaxLength(1)
-                .IsFixedLength()
-                .HasColumnName("mostrar");
-            entity.Property(e => e.NomeServico)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("nome_servico");
+            entity.Property(e => e.Mostrar).IsFixedLength();
         });
 
         modelBuilder.Entity<Ssi>(entity =>
         {
             entity.HasKey(e => e.SsiId).HasName("PRIMARY");
 
-            entity.ToTable("ssi");
-
-            entity.HasIndex(e => e.ChapaSolicitante, "fk_solicitante_chapa");
-
-            entity.HasIndex(e => e.FkServicoId, "fk_ssi_servico1_idx");
-
-            entity.HasIndex(e => e.FkUsuarioChapa, "fk_ssi_usuario_idx");
-
-            entity.Property(e => e.SsiId)
-                .HasColumnType("int(11)")
-                .HasColumnName("ssi_id");
-            entity.Property(e => e.Andamento)
-                .HasMaxLength(1)
-                .IsFixedLength()
-                .HasColumnName("andamento");
-            entity.Property(e => e.CentroDeCusto)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("centro_de_custo");
-            entity.Property(e => e.ChapaSolicitante)
-                .IsRequired()
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("chapa_solicitante");
-            entity.Property(e => e.DataFinalizacao)
-                .HasColumnType("datetime")
-                .HasColumnName("data_finalizacao");
-            entity.Property(e => e.DataRegistro)
-                .HasColumnType("datetime")
-                .HasColumnName("data_registro");
-            entity.Property(e => e.DescProblema)
-                .IsRequired()
-                .HasColumnName("desc_problema");
-            entity.Property(e => e.FkServicoId)
-                .HasColumnType("int(11)")
-                .HasColumnName("fk_servico_id");
-            entity.Property(e => e.FkUsuarioChapa)
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("fk_usuario_chapa");
-            entity.Property(e => e.NomeSolicitante)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("nome_solicitante");
-            entity.Property(e => e.PatEquipamento)
-                .HasMaxLength(100)
-                .HasColumnName("pat_equipamento");
-            entity.Property(e => e.Ramal)
-                .IsRequired()
-                .HasMaxLength(4)
-                .IsFixedLength()
-                .HasColumnName("ramal");
+            entity.Property(e => e.Andamento).IsFixedLength();
+            entity.Property(e => e.ChapaSolicitante).IsFixedLength();
+            entity.Property(e => e.FkUsuarioChapa).IsFixedLength();
+            entity.Property(e => e.Ramal).IsFixedLength();
 
             entity.HasOne(d => d.ChapaSolicitanteNavigation).WithMany(p => p.SsiChapaSolicitanteNavigations)
-                .HasForeignKey(d => d.ChapaSolicitante)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_solicitante_chapa");
 
-            entity.HasOne(d => d.FkServico).WithMany(p => p.Ssis)
-                .HasForeignKey(d => d.FkServicoId)
-                .HasConstraintName("fk_ssi_servico1");
+            entity.HasOne(d => d.FkServico).WithMany(p => p.Ssis).HasConstraintName("fk_ssi_servico1");
 
-            entity.HasOne(d => d.FkUsuarioChapaNavigation).WithMany(p => p.SsiFkUsuarioChapaNavigations)
-                .HasForeignKey(d => d.FkUsuarioChapa)
-                .HasConstraintName("fk_ssi_usuario");
+            entity.HasOne(d => d.FkUsuarioChapaNavigation).WithMany(p => p.SsiFkUsuarioChapaNavigations).HasConstraintName("fk_ssi_usuario");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Chapa).HasName("PRIMARY");
 
-            entity.ToTable("usuario");
-
-            entity.Property(e => e.Chapa)
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("chapa");
-            entity.Property(e => e.AreaTecnico)
-                .HasMaxLength(50)
-                .HasColumnName("area_tecnico");
+            entity.Property(e => e.Chapa).IsFixedLength();
             entity.Property(e => e.Mostrar)
-                .IsRequired()
-                .HasMaxLength(1)
                 .HasDefaultValueSql("'1'")
-                .IsFixedLength()
-                .HasColumnName("mostrar");
-            entity.Property(e => e.Nome)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("nome");
-            entity.Property(e => e.Ramal)
-                .IsRequired()
-                .HasMaxLength(4)
                 .IsFixedLength();
-            entity.Property(e => e.Senha)
-                .HasMaxLength(255)
-                .HasColumnName("senha");
-            entity.Property(e => e.TipoUsuario)
-                .IsRequired()
-                .HasDefaultValueSql("'usuario'")
-                .HasColumnType("enum('gerente','tecnico','usuario')")
-                .HasColumnName("tipo_usuario");
+            entity.Property(e => e.Ramal).IsFixedLength();
+            entity.Property(e => e.TipoUsuario).HasDefaultValueSql("'usuario'");
         });
 
         OnModelCreatingPartial(modelBuilder);

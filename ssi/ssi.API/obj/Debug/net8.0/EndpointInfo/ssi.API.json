@@ -43,6 +43,259 @@
         }
       }
     },
+    "/api/Acompanhar/ssiUsuario/{chapaUsuario}": {
+      "get": {
+        "tags": [
+          "Acompanhar"
+        ],
+        "parameters": [
+          {
+            "name": "chapaUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Acompanhar/ssiUsuarioDate/{chapaUsuario}": {
+      "get": {
+        "tags": [
+          "Acompanhar"
+        ],
+        "parameters": [
+          {
+            "name": "chapaUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataInicio",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dataFim",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Acompanhar/ssiDate": {
+      "get": {
+        "tags": [
+          "Acompanhar"
+        ],
+        "parameters": [
+          {
+            "name": "dataInicio",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dataFim",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ssi"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/GetUsers": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/GetByChapa": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "chapa",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -86,6 +339,9 @@
   "components": {
     "schemas": {
       "Historico": {
+        "required": [
+          "descricaoAtualizacao"
+        ],
         "type": "object",
         "properties": {
           "historicoId": {
@@ -97,14 +353,17 @@
             "format": "date-time"
           },
           "descricaoAtualizacao": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
           },
           "ssiSsiId": {
             "type": "integer",
             "format": "int32"
           },
           "usuarioChapa": {
+            "maxLength": 6,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -118,6 +377,9 @@
         "additionalProperties": false
       },
       "Peca": {
+        "required": [
+          "fkUsuarioChapa"
+        ],
         "type": "object",
         "properties": {
           "pecaId": {
@@ -129,6 +391,8 @@
             "format": "date-time"
           },
           "descricao": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -141,8 +405,9 @@
             "format": "int32"
           },
           "fkUsuarioChapa": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 6,
+            "minLength": 0,
+            "type": "string"
           },
           "fkSsi": {
             "$ref": "#/components/schemas/Ssi"
@@ -154,6 +419,10 @@
         "additionalProperties": false
       },
       "Servico": {
+        "required": [
+          "areaServico",
+          "nomeServico"
+        ],
         "type": "object",
         "properties": {
           "servicoId": {
@@ -161,16 +430,20 @@
             "format": "int32"
           },
           "mostrar": {
+            "maxLength": 1,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "nomeServico": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "areaServico": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
           },
           "ssis": {
             "type": "array",
@@ -183,6 +456,13 @@
         "additionalProperties": false
       },
       "Ssi": {
+        "required": [
+          "centroDeCusto",
+          "chapaSolicitante",
+          "descProblema",
+          "nomeSolicitante",
+          "ramal"
+        ],
         "type": "object",
         "properties": {
           "ssiId": {
@@ -190,26 +470,32 @@
             "format": "int32"
           },
           "nomeSolicitante": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "chapaSolicitante": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 6,
+            "minLength": 0,
+            "type": "string"
           },
           "centroDeCusto": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "ramal": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 4,
+            "minLength": 0,
+            "type": "string"
           },
           "descProblema": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "patEquipamento": {
+            "maxLength": 100,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -218,6 +504,8 @@
             "format": "date-time"
           },
           "andamento": {
+            "maxLength": 1,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -227,6 +515,8 @@
             "nullable": true
           },
           "fkUsuarioChapa": {
+            "maxLength": 6,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -262,33 +552,48 @@
         "additionalProperties": false
       },
       "Usuario": {
+        "required": [
+          "mostrar",
+          "nome",
+          "ramal",
+          "tipoUsuario"
+        ],
         "type": "object",
         "properties": {
           "chapa": {
+            "maxLength": 6,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "nome": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
           },
           "ramal": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 4,
+            "minLength": 0,
+            "type": "string"
           },
           "senha": {
+            "maxLength": 255,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "tipoUsuario": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "mostrar": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 1,
+            "minLength": 0,
+            "type": "string"
           },
           "areaTecnico": {
+            "maxLength": 50,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
