@@ -40,3 +40,11 @@ C:\Users\usuario\source\repos\ssi\ssi.API\obj\Debug\net8.0\refint\ssi.API.dll
 C:\Users\usuario\source\repos\ssi\ssi.API\obj\Debug\net8.0\ssi.API.pdb
 C:\Users\usuario\source\repos\ssi\ssi.API\obj\Debug\net8.0\ssi.API.genruntimeconfig.cache
 C:\Users\usuario\source\repos\ssi\ssi.API\obj\Debug\net8.0\ref\ssi.API.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\usuario\source\repos\ssi\ssi.API\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

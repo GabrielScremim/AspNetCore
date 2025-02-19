@@ -3,6 +3,12 @@ using ssi.API.Interfaces;
 using ssi.API.Models;
 using ssi.API.Repository;
 using Microsoft.AspNetCore.Builder;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using ssi.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +23,25 @@ builder.Services.AddDbContext<ssiContext>(options =>
 // Adicionar repositório de Acompanhar
 builder.Services.AddScoped<IAcompanhar, AcompanharRepository>();
 builder.Services.AddScoped<IUsuario, UsuarioRepository>();
+builder.Services.AddScoped<AuthService>();
+
+
+// Configurar autenticação JWT
+var chave = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(chave)
+        };
+    });
 
 // Adicionar controladores
 builder.Services.AddControllers();

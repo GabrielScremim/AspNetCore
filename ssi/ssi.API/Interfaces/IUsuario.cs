@@ -6,6 +6,6 @@ namespace ssi.API.Interfaces
     {
         Task<IEnumerable<Usuario>> GetAll();
         Task<IEnumerable<Usuario>> ObterInfosUser(string chapa);
-        Task<Usuario> CadastroUser(string chapa, string nome, int ramal, string senha);
+        Task<Usuario> CadastroUser(string chapa, string nome, string ramal, string senha);
     }
 }

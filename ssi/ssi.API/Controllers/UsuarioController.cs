@@ -4,42 +4,45 @@ using ssi.API.Models;
 
 namespace ssi.API.Controllers
 {
+    [Route("api/usuarios")]
     [ApiController]
-    [Route("api/[controller]")]
-    public class UsuarioController : Controller
+    public class UsuarioController : ControllerBase
     {
-        private readonly IUsuario _usuario;
+        private readonly IUsuario _usuarioService;
 
-        public UsuarioController(IUsuario usuario)
+        public UsuarioController(IUsuario usuarioService)
         {
-            _usuario = usuario;
-        }
-        [HttpGet("GetUsers")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
-        {
-            return Ok(await _usuario.GetAll());
+            _usuarioService = usuarioService;
         }
 
-        [HttpGet("GetByChapa")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetByChapa(string chapa)
+        [HttpPost("cadastro")]
+        public async Task<IActionResult> Cadastro([FromBody] Usuario usuario)
         {
             try
             {
-                // Retrieve the list of SSIs for the given user
-                var chapaUser = await _usuario.ObterInfosUser(chapa);
+                var novoUsuario = await _usuarioService.CadastroUser(
+                    usuario.Chapa, usuario.Nome, usuario.Ramal, usuario.Senha);
 
-                if (chapaUser == null || !chapaUser.Any())
-                {
-                    return NotFound("Nenhum usuário encontrado para a chapa informada.");
-                }
-
-                return Ok(chapaUser); // Return data in JSON format
+                return CreatedAtAction(nameof(ObterInfosUser), new { chapa = novoUsuario.Chapa }, novoUsuario);
             }
             catch (Exception ex)
             {
-                // Log the exception (you can log it using a logger if needed)
-                return StatusCode(500, $"Erro interno do servidor: {ex.Message}");
+                return BadRequest(new { mensagem = ex.Message });
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsuarios()
+        {
+            return Ok(await _usuarioService.GetAll());
+        }
+
+        [HttpGet("{chapa}")]
+        public async Task<IActionResult> ObterInfosUser(string chapa)
+        {
+            var usuario = await _usuarioService.ObterInfosUser(chapa);
+            if (usuario == null) return NotFound();
+            return Ok(usuario);
         }
     }
 }
